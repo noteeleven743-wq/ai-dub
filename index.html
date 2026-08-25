@@ -1,52 +1,213 @@
 <!DOCTYPE html>
-<html lang="my">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>AI-DUB</title>
+<title>AI-DUB</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #111827;
-      color: white;
-      text-align: center;
-    }
+<style>
+* {
+  box-sizing: border-box;
+}
 
-    .box {
-      max-width: 500px;
-      margin: 80px auto;
-      padding: 30px;
-    }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #111827;
+  color: white;
+  text-align: center;
+}
 
-    h1 {
-      font-size: 38px;
-    }
+.container {
+  max-width: 700px;
+  margin: auto;
+  padding: 50px 20px;
+}
 
-    p {
-      color: #b0b0b0;
-      font-size: 18px;
-    }
+h1 {
+  font-size: 42px;
+  margin-bottom: 10px;
+}
 
-    button {
-      margin-top: 30px;
-      padding: 15px 30px;
-      border: none;
-      border-radius: 10px;
-      font-size: 18px;
-      background: #22c55e;
-      color: white;
-    }
-  </style>
+p {
+  color: #b0b0b0;
+  font-size: 18px;
+}
+
+.upload-box {
+  margin-top: 40px;
+  padding: 35px 20px;
+  border: 2px dashed #3b82f6;
+  border-radius: 18px;
+  background: #1f2937;
+}
+
+input {
+  display: none;
+}
+
+.upload-btn {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 16px 35px;
+  background: #22c55e;
+  color: white;
+  border-radius: 12px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.upload-btn:hover {
+  background: #16a34a;
+}
+
+video {
+  width: 100%;
+  margin-top: 25px;
+  border-radius: 12px;
+  display: none;
+}
+
+.file-name {
+  margin-top: 20px;
+  color: #60a5fa;
+}
+
+.controls {
+  display: none;
+  margin-top: 25px;
+}
+
+select, button {
+  padding: 14px;
+  margin: 8px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.dub-btn {
+  background: #3b82f6;
+  color: white;
+  cursor: pointer;
+}
+
+.status {
+  margin-top: 20px;
+  color: #facc15;
+  font-size: 16px;
+}
+</style>
 </head>
 
 <body>
-  <div class="box">
-    <h1>🎬 AI-DUB</h1>
-    <p>Chinese Video → Myanmar AI Dubbing</p>
-    <button>Upload Video</button>
+
+<div class="container">
+
+  <h1>🎬 AI-DUB</h1>
+
+  <p>Chinese Video → Myanmar AI Dubbing</p>
+
+  <div class="upload-box">
+
+    <h2>Upload Your Video</h2>
+
+    <input type="file" id="videoInput" accept="video/*">
+
+    <label for="videoInput" class="upload-btn">
+      📁 Choose Video
+    </label>
+
+    <div class="file-name" id="fileName"></div>
+
+    <video id="videoPlayer" controls></video>
+
   </div>
+
+  <div class="controls" id="controls">
+
+    <h2>Dub Settings</h2>
+
+    <select id="voice">
+      <option>Myanmar Female Voice</option>
+      <option>Myanmar Male Voice</option>
+    </select>
+
+    <br>
+
+    <button class="dub-btn" onclick="startDub()">
+      🤖 Start AI Dubbing
+    </button>
+
+    <div class="status" id="status"></div>
+
+  </div>
+
+</div>
+
+<script>
+
+const videoInput = document.getElementById("videoInput");
+const videoPlayer = document.getElementById("videoPlayer");
+const fileName = document.getElementById("fileName");
+const controls = document.getElementById("controls");
+
+videoInput.addEventListener("change", function() {
+
+  const file = this.files[0];
+
+  if (!file) return;
+
+  fileName.innerText = "Selected: " + file.name;
+
+  const url = URL.createObjectURL(file);
+
+  videoPlayer.src = url;
+  videoPlayer.style.display = "block";
+
+  controls.style.display = "block";
+
+});
+
+function startDub() {
+
+  const status = document.getElementById("status");
+
+  status.innerHTML =
+    "🤖 AI is preparing your video...";
+
+  setTimeout(function() {
+
+    status.innerHTML =
+      "🎙️ Chinese speech detection started...";
+
+  }, 2000);
+
+  setTimeout(function() {
+
+    status.innerHTML =
+      "🇲🇲 Translating to Myanmar...";
+
+  }, 4000);
+
+  setTimeout(function() {
+
+    status.innerHTML =
+      "🔊 Generating Myanmar AI voice...";
+
+  }, 6000);
+
+  setTimeout(function() {
+
+    status.innerHTML =
+      "✅ Demo dubbing process completed!";
+
+  }, 8000);
+
+}
+
+</script>
+
 </body>
 </html>
