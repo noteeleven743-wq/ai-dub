@@ -1,15 +1,14 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import os
 
 app = Flask(__name__)
 CORS(app)
 
-@app.route("/", methods=["GET"])
+@app.route("/")
 def home():
-    return jsonify({
-        "status": "AI Dub backend is running"
-    })
+    return send_from_directory(".", "index.html")
+
 
 @app.route("/dub", methods=["POST"])
 def dub_video():
@@ -32,6 +31,7 @@ def dub_video():
         "filename": video.filename,
         "voice": voice
     })
+
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
